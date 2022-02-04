@@ -1,0 +1,46 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @post.description %>
+</p>
+  <strong>Images:</strong>
+  <% if @post.images.attached?%>
+    <%#= image_tag url_for(@post.images)%>
+  <%end%>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @post.tags %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @post.user.email %>
+</p>
+
+<div class="card my-1">
+  <div class="card-body">
+    <h2 class="font-weight-bold">Comments</h2>
+    <%= form_with(model: [@post, @post.comments.build]) do |f| %>
+      <div class="form-group">
+        <%= f.label 'New comment' %>
+        <%= f.text_area :body, class: 'form-control' %>
+      </div>
+      <%= f.submit 'Submit', class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
+
+<h2>Comments For This Post</h2>
+<% @comments.each do |comment|%>
+  <p><%= comment.body%></p>
+<%end%>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
